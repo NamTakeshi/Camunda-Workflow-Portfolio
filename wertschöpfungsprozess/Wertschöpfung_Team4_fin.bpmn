@@ -1,0 +1,1319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1ygz7zg" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.40.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.24.0">
+  <bpmn:collaboration id="Collaboration_1e5okbv">
+    <bpmn:participant id="Participant_1uz2wx1" name="RoboCare" processRef="wertschoepfung" />
+  </bpmn:collaboration>
+  <bpmn:process id="wertschoepfung" name="Wertschöpfung_Team4_fin" isExecutable="true" camunda:historyTimeToLive="60">
+    <bpmn:laneSet id="LaneSet_0ykrz41">
+      <bpmn:lane id="Lane_1atxgl7" name="Techniker">
+        <bpmn:flowNodeRef>Activity_0b29bzy</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0zxmx0n</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0ivk2uj</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1vox5av</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1uom29w</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_04ztfwb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>DataObject_wartungsprotokoll</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1c45iib</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0j53qj7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0yz5fwb</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1rpajps" name="Technischer Leiter">
+        <bpmn:flowNodeRef>Activity_0pxotoh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_05kjntj</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_13oclo4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0so0mj7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_12w5zc7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_14sxtlg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1k3fc2x</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_182iaaz</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_19of6d0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1ck3m57</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1uf0l1r" name="Lagerverwaltung">
+        <bpmn:flowNodeRef>Gateway_06mfa3g</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_19c3et0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_15j5105</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_19ucbj7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_10at2pu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0rrgxw7</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:userTask id="Activity_0pxotoh" name="Techniker auswählen" camunda:assignee="84" camunda:candidateUsers="" camunda:candidateGroups="Technischer Leiter" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Ein geeigneter Techniker wird anhand der fachlichen Anforderungen ausgewählt. Ggf. werden besondere Hinweise zum Auftrag ergänzt.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Techniker" label="Techniker" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+            <camunda:value id="Alviana" name="Alviana" />
+            <camunda:value id="Nam" name="Nam" />
+            <camunda:value id="Philipp" name="Philipp" />
+            <camunda:value id="Thomas" name="Thomas" />
+          </camunda:formField>
+          <camunda:formField id="HinweiseAuftrag" label="Besondere Hinweise zum Auftrag" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1gggnfu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1m1kz3g</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0b29bzy" name="Ersatzteilbedarf prüfen" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Es wird ermittelt, welche Ersatzteile für den Auftrag benötigt werden und ob diese vollständig vorhanden sind.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ErsatzteileVollstaendig" label="Sind alle Ersatzteile vollständig?" type="enum">
+            <camunda:value id="Ja" name="Ja" />
+            <camunda:value id="Nein" name="Nein" />
+          </camunda:formField>
+          <camunda:formField id="BenoetigteErsatzteile" label="Benötigte Ersatzteile" type="string" defaultValue="">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="VorhandeneErsatzteile" label="Vorhandene Ersatzteile" type="string" defaultValue="">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0pqghku</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ew4z0a</bpmn:outgoing>
+      <bpmn:property id="Property_01quggs" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1o7xu6u">
+        <bpmn:sourceRef>DataStoreReference_0plhqkf</bpmn:sourceRef>
+        <bpmn:targetRef>Property_01quggs</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0zxmx0n" name="Ersatzteile vollständig?">
+      <bpmn:incoming>Flow_1ew4z0a</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c30xuk</bpmn:outgoing>
+      <bpmn:outgoing>Flow_16nq3xz</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Activity_0ivk2uj" name="Ersatzteile anfragen" camunda:assignee="84" camunda:candidateUsers="" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Die fehlenden Ersatzteile werden konkretisiert, damit die Lagerverwaltung diese beschaffen kann.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="BenoetigteErsatzteile" label="Benötigte Ersatzteile" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="VorhandeneErsatzteile" label="Vorhandene Ersatzteile" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="FehlendeErsatzteile" label="Liste der fehlenden Ersatzteile" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0c30xuk</bpmn:incoming>
+      <bpmn:outgoing>Flow_04flx6n</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:dataStoreReference id="DataStoreReference_0plhqkf" name="Auftrags-DB" />
+    <bpmn:startEvent id="Event_05kjntj" name="Auftrag liegt im System vor" camunda:initiator="">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="AuftragsID" label="AuftragsID" type="string" defaultValue="">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Kundennummer" label="Kundennummer" type="string" defaultValue="">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Standort" label="Standort" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Fehlerbeschreibung" label="Fehlerbeschreibung" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Einsatztermine" label="Einsatztermine" type="date">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Dringlichkeit" label="Dringlichkeit" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+            <camunda:value id="Normal" name="Normal" />
+            <camunda:value id="Hoch" name="Hoch" />
+            <camunda:value id="Kritisch" name="Kritisch" />
+          </camunda:formField>
+          <camunda:formField id="TechnikerAnforderung" label="TechnikerAnforderung" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+            <camunda:value id="Mechanik" name="Mechanik" />
+            <camunda:value id="Elektrik" name="Elektrik" />
+            <camunda:value id="Mechatronik" name="Mechatronik" />
+            <camunda:value id="Automatisierung" name="Automatisierung" />
+          </camunda:formField>
+          <camunda:formField id="Wartungstyp" label="Wartungstyp" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+            <camunda:value id="Regelwartung" name="Regelwartung" />
+            <camunda:value id="Stoerungseinsatz" name="Störungseinsatz" />
+            <camunda:value id="Reparatur" name="Reparatur" />
+          </camunda:formField>
+          <camunda:formField id="Anlagenart" label="Anlagenart" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+            <camunda:value id="Produktionsanlage" name="Produktionsanlage" />
+            <camunda:value id="Foerdertechnik" name="Fördertechnik" />
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_017dq36</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_06mfa3g" name="im Lager vorhanden?">
+      <bpmn:incoming>Flow_15oa0t4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wxv3j2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0g24zlf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Activity_19c3et0" name="Ersatzteile bestellen" camunda:assignee="84" camunda:candidateGroups="Lagerverwaltung" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Die Beschaffung der fehlenden Ersatzteile beim angegebenen Lieferanten wird veranlasst.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="FehlendeErsatzteile" label="Liste der fehlenden Ersatzteile" type="string" defaultValue="">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Lieferant" label="Name des Lieferanten" type="string" defaultValue="">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="ErsatzteileBestellen" label="Ersatzteile bestellen" type="boolean">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0g24zlf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jzxrwk</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_15j5105">
+      <bpmn:incoming>Flow_0wxv3j2</bpmn:incoming>
+      <bpmn:incoming>Flow_1jzxrwk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0y57hm2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Activity_1vox5av" name="Ergebnisse an technischen Leiter übermitteln" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Das Wartungsprotokoll wird an den technischen Leiter zur weiteren Prüfung übermittelt.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="ProtokollInhalt">${ProtokollInhalt}</camunda:inputParameter>
+        </camunda:inputOutput>
+        <camunda:formData>
+          <camunda:formField id="TechnischerLeiterInformiert" label="Wartungsprotokoll übermitteln" type="boolean" defaultValue="">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="ProtokollInhalt" label="Wartungsprotokoll" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ip7qz1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ne2b46</bpmn:outgoing>
+      <bpmn:property id="Property_0436tyf" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1gbg2io">
+        <bpmn:sourceRef>DataObjectReference_1sk92y6</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0436tyf</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1uom29w" name="Ersatzteile vollständig?">
+      <bpmn:incoming>Flow_16nq3xz</bpmn:incoming>
+      <bpmn:incoming>Flow_07tlrsn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1svsj0a</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0azqh4v</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Activity_04ztfwb" name="Ankunft bestätigen" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Die Ankunft beim Kunden wird bestätigt und die Ankunftszeit dokumentiert.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Ankunftszeit" label="Ankunftszeit" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="AnkunftBestaetigung" label="Bestätigung" type="boolean">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1r62506</bpmn:incoming>
+      <bpmn:outgoing>Flow_14adys7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:parallelGateway id="Gateway_13oclo4">
+      <bpmn:incoming>Flow_0ne2b46</bpmn:incoming>
+      <bpmn:outgoing>Flow_14yle4o</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1jyqoyv</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:parallelGateway id="Gateway_0so0mj7">
+      <bpmn:incoming>Flow_0s8q1o9</bpmn:incoming>
+      <bpmn:incoming>Flow_1v8kfjn</bpmn:incoming>
+      <bpmn:outgoing>Flow_14d3bok</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:userTask id="Activity_12w5zc7" name="Auftrag als abgeschlossen markieren" camunda:assignee="84" camunda:candidateGroups="Technischer Leiter" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Der Auftrag wird als vollständig abgeschlossen markiert und zur Archivierung freigegeben.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Abgeschlossen" label="Auftrag abgeschlossen" type="boolean" defaultValue="">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_14d3bok</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uubpcd</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1k3j2nz">
+        <bpmn:targetRef>DataStoreReference_0z4f7if</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:dataStoreReference id="DataStoreReference_0z4f7if" name="Auftrags-DB" />
+    <bpmn:dataObjectReference id="DataObjectReference_1sk92y6" name="Wartungsprotokoll" dataObjectRef="DataObject_1ixzp0g" />
+    <bpmn:dataObject id="DataObject_1ixzp0g" />
+    <bpmn:userTask id="Activity_14sxtlg" name="Auftragsabschluss dokumentieren" camunda:assignee="84" camunda:candidateGroups="Technischer Leiter" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Der abgeschlossene Auftrag wird dokumentiert und die finale Auftragsbeschreibung ergänzt.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="ProtokollInhalt">${ProtokollInhalt}</camunda:inputParameter>
+        </camunda:inputOutput>
+        <camunda:formData>
+          <camunda:formField id="AuftragDokumentation" label="Dokumentation des Auftrags" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="ProtokollInhalt" label="Wartungsprotokoll" type="string" defaultValue="">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1jyqoyv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0s8q1o9</bpmn:outgoing>
+      <bpmn:property id="Property_0vpe010" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0yy0guy">
+        <bpmn:sourceRef>DataObjectReference_1sk92y6</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0vpe010</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0g2nnmq">
+        <bpmn:targetRef>DataStoreReference_0z4f7if</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1k3fc2x" name="Ergebnisse prüfen" camunda:assignee="84" camunda:candidateGroups="Technischer Leiter" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Die Ergebnisse des Einsatzes sowie das Wartungsprotokoll werden auf Vollständigkeit und Qualität geprüft.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="ProtokollInhalt">${ProtokollInhalt}</camunda:inputParameter>
+        </camunda:inputOutput>
+        <camunda:formData>
+          <camunda:formField id="ErgebnissePruefen" label="Prüfung abgeschlossen" type="boolean">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="ErgebnisseKommentar" label="Kommentar" type="string" />
+          <camunda:formField id="ProtokollInhalt" label="Wartungsprotokoll" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_14yle4o</bpmn:incoming>
+      <bpmn:outgoing>Flow_1v8kfjn</bpmn:outgoing>
+      <bpmn:property id="Property_19vhb2a" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0w7l4sm">
+        <bpmn:sourceRef>DataObjectReference_1sk92y6</bpmn:sourceRef>
+        <bpmn:targetRef>Property_19vhb2a</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:subProcess id="DataObject_wartungsprotokoll" name="Reparatur ausführen &#38; testen">
+      <bpmn:incoming>Flow_14adys7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ip7qz1</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0go8r2i">
+        <bpmn:targetRef>DataObjectReference_1sk92y6</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:startEvent id="StartEvent_1" name="Ankunft beim Kunden">
+        <bpmn:outgoing>Flow_0mb8wsp</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="Activity_0vx4jx9" name="Maschine inspizieren" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+        <bpmn:documentation>Die Maschine wird vor Ort inspiziert, um den aktuellen Zustand zu erfassen.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="InspektionAbgeschlossen" label="Maschine inspizieren" type="boolean" defaultValue="true">
+              <camunda:validation>
+                <camunda:constraint name="required" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="Kommentar" label="Kommentar" type="string" />
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0mb8wsp</bpmn:incoming>
+        <bpmn:outgoing>Flow_0o0i8yy</bpmn:outgoing>
+        <bpmn:property id="Property_1hkulij" name="__targetRef_placeholder" />
+        <bpmn:dataInputAssociation id="DataInputAssociation_00ijxa0">
+          <bpmn:sourceRef>DataStoreReference_0jhijty</bpmn:sourceRef>
+          <bpmn:targetRef>Property_1hkulij</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:userTask>
+      <bpmn:userTask id="Activity_1m85bbs" name="Wartung/ Reparatur durchführen" camunda:assignee="84" camunda:candidateUsers="" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+        <bpmn:documentation>Die notwendigen Wartungs- oder Reparaturarbeiten werden durchgeführt.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="ReparaturErledigt" label="Wartung / Reparatur durchführen" type="boolean" defaultValue="true">
+              <camunda:validation>
+                <camunda:constraint name="required" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="DurchgefuehrteMassnahmen" label="Durchgeführte Maßnahmen" type="string" defaultValue="" />
+            <camunda:formField id="Materialverbrauch" label="Materialverbrauch" type="string" />
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0o0i8yy</bpmn:incoming>
+        <bpmn:outgoing>Flow_0kgnq8o</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="Activity_06osl4v" name="Funktionalität prüfen" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+        <bpmn:documentation>Es wird überprüft, ob die Maschine nach der Maßnahme wieder einwandfrei funktioniert.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="Funktionsfaehig" label="Funktioniert die Maschine einwandfrei?" type="enum">
+              <camunda:value id="Ja" name="Ja" />
+              <camunda:value id="Nein" name="Nein" />
+            </camunda:formField>
+            <camunda:formField id="KommentarFunktion" label="Kommentar" type="string" defaultValue="" />
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0kgnq8o</bpmn:incoming>
+        <bpmn:outgoing>Flow_035heix</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:exclusiveGateway id="Gateway_031h6a5" name="Maschine funktioniert einwandfrei?">
+        <bpmn:incoming>Flow_035heix</bpmn:incoming>
+        <bpmn:outgoing>Flow_19knaol</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0wp5awd</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:parallelGateway id="Gateway_136ullb">
+        <bpmn:incoming>Flow_19knaol</bpmn:incoming>
+        <bpmn:outgoing>Flow_0tahef2</bpmn:outgoing>
+        <bpmn:outgoing>Flow_10agqnj</bpmn:outgoing>
+      </bpmn:parallelGateway>
+      <bpmn:parallelGateway id="Gateway_0gtbrv6">
+        <bpmn:incoming>Flow_1p0v04p</bpmn:incoming>
+        <bpmn:incoming>Flow_0jgzazj</bpmn:incoming>
+        <bpmn:outgoing>Flow_1dzpj0m</bpmn:outgoing>
+      </bpmn:parallelGateway>
+      <bpmn:userTask id="Activity_0pi4s1d" name="Folgetermin planen" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+        <bpmn:documentation>Bei Bedarf wird ein weiterer Einsatztermin geplant.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="FolgeTermin" label="Folgetermin" type="date">
+              <camunda:validation>
+                <camunda:constraint name="required" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0tahef2</bpmn:incoming>
+        <bpmn:outgoing>Flow_0jgzazj</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="Activity_0tt7gh5" name="Materialbedarf melden" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+        <bpmn:documentation>Zusätzlich benötigtes Material oder Ersatzteile werden gemeldet.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="FehlendeTeile" label="Folgende Teile/ folgendes Material werden noch zusätzlich benötigt" type="string" />
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_10agqnj</bpmn:incoming>
+        <bpmn:outgoing>Flow_1p0v04p</bpmn:outgoing>
+        <bpmn:dataOutputAssociation id="DataOutputAssociation_0v7l5lz">
+          <bpmn:targetRef>DataStoreReference_05f71iw</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:userTask>
+      <bpmn:exclusiveGateway id="Gateway_1phtqdu">
+        <bpmn:incoming>Flow_0wp5awd</bpmn:incoming>
+        <bpmn:incoming>Flow_1dzpj0m</bpmn:incoming>
+        <bpmn:outgoing>Flow_03o8f1j</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:userTask id="Activity_0bzdjd4" name="Wartungsprotokoll erstellen" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+        <bpmn:documentation>Ein vollständiges Wartungsprotokoll über alle durchgeführten Maßnahmen wird erstellt.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="ProtokollInhalt" label="Wartungsprotokoll" type="string">
+              <camunda:validation>
+                <camunda:constraint name="required" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+          </camunda:formData>
+          <camunda:inputOutput>
+            <camunda:outputParameter name="ProtokollInhalt">${ProtokollInhalt}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_03o8f1j</bpmn:incoming>
+        <bpmn:outgoing>Flow_07jitvt</bpmn:outgoing>
+        <bpmn:dataOutputAssociation id="DataOutputAssociation_1hoj3e6">
+          <bpmn:targetRef>DataObjectReference_199ibph</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:userTask>
+      <bpmn:endEvent id="Event_0ftb3e4" name="Wartungsprotokoll erstellt">
+        <bpmn:incoming>Flow_07jitvt</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:dataObjectReference id="DataObjectReference_199ibph" name="Wartungsprotokoll" dataObjectRef="DataObject_06ci5en">
+        <bpmn:extensionElements />
+      </bpmn:dataObjectReference>
+      <bpmn:dataObject id="DataObject_06ci5en" />
+      <bpmn:dataStoreReference id="DataStoreReference_0jhijty" name="Auftrags-DB" />
+      <bpmn:dataStoreReference id="DataStoreReference_05f71iw" name="Auftrags-DB" />
+      <bpmn:sequenceFlow id="Flow_0mb8wsp" sourceRef="StartEvent_1" targetRef="Activity_0vx4jx9" />
+      <bpmn:sequenceFlow id="Flow_0o0i8yy" sourceRef="Activity_0vx4jx9" targetRef="Activity_1m85bbs" />
+      <bpmn:sequenceFlow id="Flow_0kgnq8o" sourceRef="Activity_1m85bbs" targetRef="Activity_06osl4v" />
+      <bpmn:sequenceFlow id="Flow_035heix" sourceRef="Activity_06osl4v" targetRef="Gateway_031h6a5" />
+      <bpmn:sequenceFlow id="Flow_19knaol" name="nein" sourceRef="Gateway_031h6a5" targetRef="Gateway_136ullb">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${Funktionsfaehig == 'Nein'}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_0wp5awd" name="ja" sourceRef="Gateway_031h6a5" targetRef="Gateway_1phtqdu">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${Funktionsfaehig == 'Ja'}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_0tahef2" sourceRef="Gateway_136ullb" targetRef="Activity_0pi4s1d" />
+      <bpmn:sequenceFlow id="Flow_10agqnj" sourceRef="Gateway_136ullb" targetRef="Activity_0tt7gh5" />
+      <bpmn:sequenceFlow id="Flow_1p0v04p" sourceRef="Activity_0tt7gh5" targetRef="Gateway_0gtbrv6" />
+      <bpmn:sequenceFlow id="Flow_0jgzazj" sourceRef="Activity_0pi4s1d" targetRef="Gateway_0gtbrv6" />
+      <bpmn:sequenceFlow id="Flow_1dzpj0m" sourceRef="Gateway_0gtbrv6" targetRef="Gateway_1phtqdu" />
+      <bpmn:sequenceFlow id="Flow_03o8f1j" sourceRef="Gateway_1phtqdu" targetRef="Activity_0bzdjd4" />
+      <bpmn:sequenceFlow id="Flow_07jitvt" sourceRef="Activity_0bzdjd4" targetRef="Event_0ftb3e4" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_017dq36" sourceRef="Event_05kjntj" targetRef="Activity_182iaaz" />
+    <bpmn:sequenceFlow id="Flow_1m1kz3g" sourceRef="Activity_0pxotoh" targetRef="Gateway_0j53qj7" />
+    <bpmn:sequenceFlow id="Flow_1ew4z0a" sourceRef="Activity_0b29bzy" targetRef="Gateway_0zxmx0n" />
+    <bpmn:sequenceFlow id="Flow_0c30xuk" name="nein" sourceRef="Gateway_0zxmx0n" targetRef="Activity_0ivk2uj">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ErsatzteileVollstaendig == 'Nein'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_16nq3xz" name="ja" sourceRef="Gateway_0zxmx0n" targetRef="Gateway_1uom29w">
+      <bpmn:extensionElements />
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ErsatzteileVollstaendig == 'Ja'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_04flx6n" sourceRef="Activity_0ivk2uj" targetRef="Activity_0rrgxw7" />
+    <bpmn:sequenceFlow id="Flow_15oa0t4" sourceRef="Activity_0rrgxw7" targetRef="Gateway_06mfa3g" />
+    <bpmn:sequenceFlow id="Flow_0wxv3j2" name="ja" sourceRef="Gateway_06mfa3g" targetRef="Gateway_15j5105">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ImLagerVorhanden == 'Ja'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0g24zlf" name="nein" sourceRef="Gateway_06mfa3g" targetRef="Activity_19c3et0">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ImLagerVorhanden == 'Nein'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1jzxrwk" sourceRef="Activity_19c3et0" targetRef="Gateway_15j5105" />
+    <bpmn:sequenceFlow id="Flow_0y57hm2" sourceRef="Gateway_15j5105" targetRef="Activity_19ucbj7" />
+    <bpmn:sequenceFlow id="Flow_0drvb27" sourceRef="Activity_19ucbj7" targetRef="Activity_10at2pu" />
+    <bpmn:sequenceFlow id="Flow_0rj2ext" sourceRef="Activity_10at2pu" targetRef="Activity_1c45iib" />
+    <bpmn:sequenceFlow id="Flow_0ip7qz1" sourceRef="DataObject_wartungsprotokoll" targetRef="Activity_1vox5av" />
+    <bpmn:sequenceFlow id="Flow_0ne2b46" sourceRef="Activity_1vox5av" targetRef="Gateway_13oclo4" />
+    <bpmn:sequenceFlow id="Flow_07tlrsn" sourceRef="Activity_1c45iib" targetRef="Gateway_1uom29w" />
+    <bpmn:sequenceFlow id="Flow_1svsj0a" name="ja" sourceRef="Gateway_1uom29w" targetRef="Activity_0yz5fwb">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ErsatzteileVollstaendig == 'Ja'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1r62506" sourceRef="Activity_0yz5fwb" targetRef="Activity_04ztfwb" />
+    <bpmn:sequenceFlow id="Flow_14adys7" sourceRef="Activity_04ztfwb" targetRef="DataObject_wartungsprotokoll" />
+    <bpmn:sequenceFlow id="Flow_14yle4o" sourceRef="Gateway_13oclo4" targetRef="Activity_1k3fc2x" />
+    <bpmn:sequenceFlow id="Flow_1jyqoyv" sourceRef="Gateway_13oclo4" targetRef="Activity_14sxtlg" />
+    <bpmn:sequenceFlow id="Flow_0s8q1o9" sourceRef="Activity_14sxtlg" targetRef="Gateway_0so0mj7" />
+    <bpmn:sequenceFlow id="Flow_1v8kfjn" sourceRef="Activity_1k3fc2x" targetRef="Gateway_0so0mj7" />
+    <bpmn:sequenceFlow id="Flow_14d3bok" sourceRef="Gateway_0so0mj7" targetRef="Activity_12w5zc7" />
+    <bpmn:manualTask id="Activity_19ucbj7" name="Ersatzteile bereitstellen">
+      <bpmn:incoming>Flow_0y57hm2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0drvb27</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:userTask id="Activity_10at2pu" name="Bereitstellung bestätigen" camunda:assignee="84" camunda:candidateGroups="Lagerverwaltung" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Es wird bestätigt, dass alle benötigten Ersatzteile vollständig bereitliegen.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="TeileBereit" label="Alle Ersatzteile liegen vor" type="boolean" defaultValue="true">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0drvb27</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rj2ext</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0rrgxw7" name="Ersatzteile auf Vorhandensein prüfen" camunda:assignee="84" camunda:candidateGroups="Lagerverwaltung" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Im Lager wird überprüft, ob alle angefragten Ersatzteile verfügbar sind.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ImLagerVorhanden" label="Sind alle nötigen Ersatzteile im Lager vorhanden?" type="enum">
+            <camunda:value id="Ja" name="Ja" />
+            <camunda:value id="Nein" name="Nein" />
+          </camunda:formField>
+          <camunda:formField id="FehlendeErsatzteile" label="Liste der fehlenden Ersatzteile" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04flx6n</bpmn:incoming>
+      <bpmn:outgoing>Flow_15oa0t4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1c45iib" name="Vollständigkeit der Ersatzteile prüfen" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Es wird kontrolliert, ob alle für den Einsatz erforderlichen Teile vollständig vorhanden sind.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ErsatzteileVollstaendig" label="Sind alle Ersatzteile vollständig?" type="enum">
+            <camunda:value id="Ja" name="Ja" />
+            <camunda:value id="Nein" name="Nein" />
+          </camunda:formField>
+          <camunda:formField id="Pruefergebnis" label="Prüfung abgeschlossen" type="boolean">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0rj2ext</bpmn:incoming>
+      <bpmn:outgoing>Flow_07tlrsn</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0j53qj7">
+      <bpmn:incoming>Flow_0azqh4v</bpmn:incoming>
+      <bpmn:incoming>Flow_1m1kz3g</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pqghku</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0pqghku" sourceRef="Gateway_0j53qj7" targetRef="Activity_0b29bzy" />
+    <bpmn:sequenceFlow id="Flow_0azqh4v" name="nein" sourceRef="Gateway_1uom29w" targetRef="Gateway_0j53qj7">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ErsatzteileVollstaendig == 'Nein'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Activity_182iaaz" name="Auftrag prüfen" camunda:assignee="84" camunda:candidateUsers="" camunda:candidateGroups="Technischer Leiter" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+      <bpmn:documentation>Der eingegangene Auftrag wird auf Vollständigkeit und Plausibilität geprüft. Es wird bestätigt, dass alle notwendigen Informationen vorliegen und der Auftrag bearbeitet werden kann.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="AuftragsID" label="AuftragsID" type="string" />
+          <camunda:formField id="Kundennummer" label="Kundennummer" type="string" />
+          <camunda:formField id="Standort" label="Standort" type="string" />
+          <camunda:formField id="Wartungstyp" label="Wartungstyp" type="enum">
+            <camunda:value id="Regelwartung" name="Regelwartung" />
+            <camunda:value id="Stoerungseinsatz" name="Störungseinsatz" />
+            <camunda:value id="Reparatur" name="Reparatur" />
+          </camunda:formField>
+          <camunda:formField id="Fehlerbeschreibung" label="Fehlerbeschreibung" type="string" />
+          <camunda:formField id="Einsatztermine" label="Einsatztermine" type="date" />
+          <camunda:formField id="Dringlichkeit" label="Dringlichkeit" type="enum">
+            <camunda:value id="Normal" name="Normal" />
+            <camunda:value id="Hoch" name="Hoch" />
+            <camunda:value id="Kritisch" name="Kritisch" />
+          </camunda:formField>
+          <camunda:formField id="TechnikerAnforderung" label="TechnikerAnforderung" type="enum">
+            <camunda:value id="Mechanik" name="Mechanik" />
+            <camunda:value id="Elektrik" name="Elektrik" />
+            <camunda:value id="Mechatronik" name="Mechatronik" />
+            <camunda:value id="Automatisierung" name="Automatisierung" />
+          </camunda:formField>
+          <camunda:formField id="AuftragPruefen" label="Prüfung abgeschlossen" type="boolean">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_017dq36</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gggnfu</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1gggnfu" sourceRef="Activity_182iaaz" targetRef="Activity_0pxotoh" />
+    <bpmn:subProcess id="Activity_0yz5fwb" name="Anfahrt vorbereiten">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_1svsj0a</bpmn:incoming>
+      <bpmn:outgoing>Flow_1r62506</bpmn:outgoing>
+      <bpmn:manualTask id="Activity_0qifl6l" name="Fahrzeug beladen">
+        <bpmn:incoming>Flow_0er2nvc</bpmn:incoming>
+        <bpmn:outgoing>Flow_1pcjo2e</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:endEvent id="Event_0v8k0xo" name="Vorbereitung abgeschlossen">
+        <bpmn:incoming>Flow_06kam8g</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:dataStoreReference id="DataStoreReference_0utcq19" name="Auftrags-DB" />
+      <bpmn:startEvent id="Event_0smq8qi" name="Ersatzteile vollständig">
+        <bpmn:outgoing>Flow_1u8hzks</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="Activity_0004wou" name="Abfahrt bestätigen" camunda:assignee="84" camunda:candidateUsers="" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+        <bpmn:documentation>Der Zeitpunkt der Abfahrt zum Kunden wird bestätigt.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="Abfahrtzeit" label="Abfahrtzeit" type="string" defaultValue="">
+              <camunda:validation>
+                <camunda:constraint name="required" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="AbfahrtBestaetigung" label="Abfahrt bestätigen" type="boolean" defaultValue="true">
+              <camunda:validation>
+                <camunda:constraint name="required" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1pcjo2e</bpmn:incoming>
+        <bpmn:outgoing>Flow_06kam8g</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:manualTask id="Activity_17cr1dc" name="Werkzeuge prüfen">
+        <bpmn:incoming>Flow_0w9i4pg</bpmn:incoming>
+        <bpmn:outgoing>Flow_0er2nvc</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:userTask id="Activity_1ppt1v1" name="Einsatzroute planen" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+        <bpmn:documentation>Die optimale Route zum Kundenstandort wird geplant und Distanz sowie Fahrzeit wurden ermittelt.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="Startpunkt" label="Startpunkt" type="string">
+              <camunda:properties />
+              <camunda:validation>
+                <camunda:constraint name="required" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="Transportmittel" label="Transportmittel" type="enum">
+              <camunda:value id="PKW" name="PKW" />
+              <camunda:value id="LKW" name="LKW" />
+            </camunda:formField>
+            <camunda:formField id="Standort" label="Kundenstandort" type="string" />
+            <camunda:formField id="distanceKm" label="Distanz in Kilometer" type="long" />
+            <camunda:formField id="travelTimeMinutes" label="Fahrzeit in Minuten" type="long" />
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0t4o8j2</bpmn:incoming>
+        <bpmn:outgoing>Flow_0w9i4pg</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="Activity_11pyd42" name="Auftragsdetails studieren" camunda:assignee="84" camunda:candidateGroups="Techniker" camunda:dueDate="${null}" camunda:followUpDate="${null}">
+        <bpmn:documentation>Alle relevanten Auftragsinformationen werden gesichtet, um eine optimale Einsatzvorbereitung zu gewährleisten.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="AuftragsID" label="AuftragsID" type="string">
+              <camunda:validation>
+                <camunda:constraint name="readonly" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="Kundennummer" label="Kundennummer" type="string">
+              <camunda:validation>
+                <camunda:constraint name="readonly" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="Fehlerbeschreibung" label="Fehlerbeschreibung" type="string">
+              <camunda:validation>
+                <camunda:constraint name="readonly" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="Wartungstyp" label="Wartungstyp" type="enum" defaultValue="Regelwartung">
+              <camunda:validation>
+                <camunda:constraint name="readonly" config="true" />
+              </camunda:validation>
+              <camunda:value id="Regelwartung" name="Regelwartung" />
+              <camunda:value id="Reparatur" name="Reparatur" />
+              <camunda:value id="Stoerungseinsatz" name="Störungseinsatz" />
+            </camunda:formField>
+            <camunda:formField id="Einsatztermine" label="Einsatztermine" type="date">
+              <camunda:validation>
+                <camunda:constraint name="readonly" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="Dringlichkeit" label="Dringlichkeit" type="enum" defaultValue="Normal">
+              <camunda:validation>
+                <camunda:constraint name="readonly" config="true" />
+              </camunda:validation>
+              <camunda:value id="Normal" name="Normal" />
+              <camunda:value id="Hoch" name="Hoch" />
+              <camunda:value id="Kritisch" name="Kritisch" />
+            </camunda:formField>
+            <camunda:formField id="HinweiseAuftrag" label="Hinweise vom technischen Leiter" type="string" defaultValue="">
+              <camunda:validation>
+                <camunda:constraint name="readonly" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="Standort" label="Kundenstandort" type="string">
+              <camunda:validation>
+                <camunda:constraint name="readonly" config="true" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="Startpunkt" label="Startpunkt" type="string" defaultValue="Treskowallee 8">
+              <camunda:validation />
+            </camunda:formField>
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1u8hzks</bpmn:incoming>
+        <bpmn:outgoing>Flow_0l69c68</bpmn:outgoing>
+        <bpmn:property id="Property_0vw5gf6" name="__targetRef_placeholder" />
+        <bpmn:dataInputAssociation id="DataInputAssociation_0lsxk6g">
+          <bpmn:sourceRef>DataStoreReference_0utcq19</bpmn:sourceRef>
+          <bpmn:targetRef>Property_0vw5gf6</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_0er2nvc" sourceRef="Activity_17cr1dc" targetRef="Activity_0qifl6l" />
+      <bpmn:sequenceFlow id="Flow_1pcjo2e" sourceRef="Activity_0qifl6l" targetRef="Activity_0004wou" />
+      <bpmn:sequenceFlow id="Flow_06kam8g" sourceRef="Activity_0004wou" targetRef="Event_0v8k0xo" />
+      <bpmn:sequenceFlow id="Flow_1u8hzks" sourceRef="Event_0smq8qi" targetRef="Activity_11pyd42" />
+      <bpmn:sequenceFlow id="Flow_0l69c68" sourceRef="Activity_11pyd42" targetRef="Activity_0tuogdh" />
+      <bpmn:sequenceFlow id="Flow_0t4o8j2" sourceRef="Activity_0tuogdh" targetRef="Activity_1ppt1v1" />
+      <bpmn:serviceTask id="Activity_0tuogdh" name="Distanz &#38; Fahrzeit berechnen" camunda:type="external" camunda:topic="calculateDistance">
+        <bpmn:documentation>Dieser REST-Service-Task berechnet automatisch die Distanz und Fahrzeit zwischen Start- und Zielpunkt über OpenStreetMap basierend auf den übergebenen Prozessvariablen und liefert die Ergebnisse als Prozessvariablen zurück.</bpmn:documentation>
+        <bpmn:extensionElements />
+        <bpmn:incoming>Flow_0l69c68</bpmn:incoming>
+        <bpmn:outgoing>Flow_0t4o8j2</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_0w9i4pg" sourceRef="Activity_1ppt1v1" targetRef="Activity_17cr1dc" />
+    </bpmn:subProcess>
+    <bpmn:endEvent id="Event_19of6d0" name="Auftrag abgeschlossen">
+      <bpmn:incoming>Flow_0ntb51s</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0uubpcd" sourceRef="Activity_12w5zc7" targetRef="Activity_1ck3m57" />
+    <bpmn:sequenceFlow id="Flow_0ntb51s" sourceRef="Activity_1ck3m57" targetRef="Event_19of6d0" />
+    <bpmn:serviceTask id="Activity_1ck3m57" name="Twitter Benachrichtigung senden" camunda:type="external" camunda:topic="postTweet">
+      <bpmn:documentation>Dieser Service Task dient der internen Kommunikation innerhalb des Unternehmens. Nach Abschluss eines Serviceeinsatzes wird automatisch eine kurze Statusmeldung veröffentlicht, die Mitarbeitende über den erfolgreichen Abschluss informiert.</bpmn:documentation>
+      <bpmn:incoming>Flow_0uubpcd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ntb51s</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:message id="Message_3f8f180" name="Test" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1e5okbv">
+      <bpmndi:BPMNShape id="Participant_1uz2wx1_di" bpmnElement="Participant_1uz2wx1" isHorizontal="true">
+        <dc:Bounds x="152" y="80" width="3038" height="1000" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1uf0l1r_di" bpmnElement="Lane_1uf0l1r" isHorizontal="true">
+        <dc:Bounds x="182" y="770" width="3008" height="310" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1rpajps_di" bpmnElement="Lane_1rpajps" isHorizontal="true">
+        <dc:Bounds x="182" y="80" width="3008" height="315" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1atxgl7_di" bpmnElement="Lane_1atxgl7" isHorizontal="true">
+        <dc:Bounds x="182" y="395" width="3008" height="375" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_125z4vn_di" bpmnElement="Activity_0pxotoh">
+        <dc:Bounds x="480" y="290" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1konzxd_di" bpmnElement="Activity_0b29bzy">
+        <dc:Bounds x="610" y="550" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0zxmx0n_di" bpmnElement="Gateway_0zxmx0n" isMarkerVisible="true">
+        <dc:Bounds x="765" y="565" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="822" y="577" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1i6rkkf_di" bpmnElement="Activity_0ivk2uj">
+        <dc:Bounds x="850" y="620" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0plhqkf_di" bpmnElement="DataStoreReference_0plhqkf">
+        <dc:Bounds x="525" y="645" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="580" y="646" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_181rv0v_di" bpmnElement="Event_05kjntj">
+        <dc:Bounds x="242" y="312" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="223" y="355" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_06mfa3g_di" bpmnElement="Gateway_06mfa3g" isMarkerVisible="true">
+        <dc:Bounds x="1005" y="915" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1064.5" y="926" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qpocvg_di" bpmnElement="Activity_19c3et0">
+        <dc:Bounds x="1090" y="970" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_15j5105_di" bpmnElement="Gateway_15j5105" isMarkerVisible="true">
+        <dc:Bounds x="1205" y="835" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ssv36d_di" bpmnElement="Activity_1vox5av">
+        <dc:Bounds x="2385" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1uom29w_di" bpmnElement="Gateway_1uom29w" isMarkerVisible="true">
+        <dc:Bounds x="1645" y="515" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1680" y="486" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kch528_di" bpmnElement="Activity_04ztfwb">
+        <dc:Bounds x="2010" y="500" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0xybjw8_di" bpmnElement="Gateway_13oclo4">
+        <dc:Bounds x="2455" y="195" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_18ah43c_di" bpmnElement="Gateway_0so0mj7">
+        <dc:Bounds x="2675" y="195" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0a4o7hy_di" bpmnElement="Activity_12w5zc7">
+        <dc:Bounds x="2770" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0z4f7if_di" bpmnElement="DataStoreReference_0z4f7if">
+        <dc:Bounds x="2705" y="315" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2700" y="372" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1sk92y6_di" bpmnElement="DataObjectReference_1sk92y6">
+        <dc:Bounds x="2272" y="145" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2246" y="123" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1k59hwk_di" bpmnElement="Activity_14sxtlg">
+        <dc:Bounds x="2540" y="240" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1p4sysn_di" bpmnElement="Activity_1k3fc2x">
+        <dc:Bounds x="2540" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nj9kua_di" bpmnElement="DataObject_wartungsprotokoll" isExpanded="false">
+        <dc:Bounds x="2190" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zrzmaq_di" bpmnElement="Activity_19ucbj7">
+        <dc:Bounds x="1290" y="820" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0b9wu4v_di" bpmnElement="Activity_10at2pu">
+        <dc:Bounds x="1440" y="820" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1f5zwir_di" bpmnElement="Activity_0rrgxw7">
+        <dc:Bounds x="850" y="900" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hjl5iv_di" bpmnElement="Activity_1c45iib">
+        <dc:Bounds x="1620" y="620" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0wfs3rj_di" bpmnElement="Gateway_0j53qj7" isMarkerVisible="true">
+        <dc:Bounds x="635" y="455" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mxupll_di" bpmnElement="Activity_182iaaz">
+        <dc:Bounds x="330" y="290" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yz5fwb_di" bpmnElement="Activity_0yz5fwb" isExpanded="false">
+        <dc:Bounds x="1830" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19of6d0_di" bpmnElement="Event_19of6d0">
+        <dc:Bounds x="3122" y="202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3103" y="245" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vt5kgx_di" bpmnElement="Activity_1ck3m57">
+        <dc:Bounds x="2920" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_017dq36_di" bpmnElement="Flow_017dq36">
+        <di:waypoint x="278" y="330" />
+        <di:waypoint x="330" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m1kz3g_di" bpmnElement="Flow_1m1kz3g">
+        <di:waypoint x="530" y="370" />
+        <di:waypoint x="530" y="480" />
+        <di:waypoint x="635" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ew4z0a_di" bpmnElement="Flow_1ew4z0a">
+        <di:waypoint x="710" y="590" />
+        <di:waypoint x="765" y="590" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0c30xuk_di" bpmnElement="Flow_0c30xuk">
+        <di:waypoint x="790" y="615" />
+        <di:waypoint x="790" y="660" />
+        <di:waypoint x="850" y="660" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="790" y="631" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16nq3xz_di" bpmnElement="Flow_16nq3xz">
+        <di:waypoint x="790" y="565" />
+        <di:waypoint x="790" y="540" />
+        <di:waypoint x="1645" y="540" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="774" y="541" width="9" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04flx6n_di" bpmnElement="Flow_04flx6n">
+        <di:waypoint x="900" y="700" />
+        <di:waypoint x="900" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15oa0t4_di" bpmnElement="Flow_15oa0t4">
+        <di:waypoint x="950" y="940" />
+        <di:waypoint x="1005" y="940" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wxv3j2_di" bpmnElement="Flow_0wxv3j2">
+        <di:waypoint x="1030" y="915" />
+        <di:waypoint x="1030" y="860" />
+        <di:waypoint x="1205" y="860" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1009" y="877" width="9" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0g24zlf_di" bpmnElement="Flow_0g24zlf">
+        <di:waypoint x="1030" y="965" />
+        <di:waypoint x="1030" y="1010" />
+        <di:waypoint x="1090" y="1010" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1003" y="985" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jzxrwk_di" bpmnElement="Flow_1jzxrwk">
+        <di:waypoint x="1190" y="1010" />
+        <di:waypoint x="1230" y="1010" />
+        <di:waypoint x="1230" y="885" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0y57hm2_di" bpmnElement="Flow_0y57hm2">
+        <di:waypoint x="1255" y="860" />
+        <di:waypoint x="1290" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0drvb27_di" bpmnElement="Flow_0drvb27">
+        <di:waypoint x="1390" y="860" />
+        <di:waypoint x="1440" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rj2ext_di" bpmnElement="Flow_0rj2ext">
+        <di:waypoint x="1490" y="820" />
+        <di:waypoint x="1490" y="660" />
+        <di:waypoint x="1620" y="660" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ip7qz1_di" bpmnElement="Flow_0ip7qz1">
+        <di:waypoint x="2290" y="540" />
+        <di:waypoint x="2385" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ne2b46_di" bpmnElement="Flow_0ne2b46">
+        <di:waypoint x="2435" y="500" />
+        <di:waypoint x="2435" y="220" />
+        <di:waypoint x="2455" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07tlrsn_di" bpmnElement="Flow_07tlrsn">
+        <di:waypoint x="1670" y="620" />
+        <di:waypoint x="1670" y="565" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1svsj0a_di" bpmnElement="Flow_1svsj0a">
+        <di:waypoint x="1695" y="540" />
+        <di:waypoint x="1830" y="540" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1744" y="522" width="9" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r62506_di" bpmnElement="Flow_1r62506">
+        <di:waypoint x="1930" y="540" />
+        <di:waypoint x="2010" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14adys7_di" bpmnElement="Flow_14adys7">
+        <di:waypoint x="2110" y="540" />
+        <di:waypoint x="2190" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14yle4o_di" bpmnElement="Flow_14yle4o">
+        <di:waypoint x="2480" y="195" />
+        <di:waypoint x="2480" y="140" />
+        <di:waypoint x="2540" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jyqoyv_di" bpmnElement="Flow_1jyqoyv">
+        <di:waypoint x="2480" y="245" />
+        <di:waypoint x="2480" y="280" />
+        <di:waypoint x="2540" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s8q1o9_di" bpmnElement="Flow_0s8q1o9">
+        <di:waypoint x="2640" y="280" />
+        <di:waypoint x="2700" y="280" />
+        <di:waypoint x="2700" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v8kfjn_di" bpmnElement="Flow_1v8kfjn">
+        <di:waypoint x="2640" y="140" />
+        <di:waypoint x="2700" y="140" />
+        <di:waypoint x="2700" y="195" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14d3bok_di" bpmnElement="Flow_14d3bok">
+        <di:waypoint x="2725" y="220" />
+        <di:waypoint x="2770" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pqghku_di" bpmnElement="Flow_0pqghku">
+        <di:waypoint x="660" y="505" />
+        <di:waypoint x="660" y="550" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="674" y="525" width="2" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0azqh4v_di" bpmnElement="Flow_0azqh4v">
+        <di:waypoint x="1670" y="515" />
+        <di:waypoint x="1670" y="480" />
+        <di:waypoint x="685" y="480" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1152" y="463" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gggnfu_di" bpmnElement="Flow_1gggnfu">
+        <di:waypoint x="430" y="330" />
+        <di:waypoint x="480" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uubpcd_di" bpmnElement="Flow_0uubpcd">
+        <di:waypoint x="2870" y="220" />
+        <di:waypoint x="2920" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ntb51s_di" bpmnElement="Flow_0ntb51s">
+        <di:waypoint x="3020" y="220" />
+        <di:waypoint x="3122" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1o7xu6u_di" bpmnElement="DataInputAssociation_1o7xu6u">
+        <di:waypoint x="572" y="645" />
+        <di:waypoint x="610" y="602" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1gbg2io_di" bpmnElement="DataInputAssociation_1gbg2io">
+        <di:waypoint x="2300" y="195" />
+        <di:waypoint x="2419" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1k3j2nz_di" bpmnElement="DataOutputAssociation_1k3j2nz">
+        <di:waypoint x="2790" y="260" />
+        <di:waypoint x="2750" y="315" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0yy0guy_di" bpmnElement="DataInputAssociation_0yy0guy">
+        <di:waypoint x="2308" y="195" />
+        <di:waypoint x="2390" y="310" />
+        <di:waypoint x="2540" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0g2nnmq_di" bpmnElement="DataOutputAssociation_0g2nnmq">
+        <di:waypoint x="2640" y="302" />
+        <di:waypoint x="2705" y="331" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0w7l4sm_di" bpmnElement="DataInputAssociation_0w7l4sm">
+        <di:waypoint x="2308" y="167" />
+        <di:waypoint x="2540" y="124" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0go8r2i_di" bpmnElement="DataOutputAssociation_0go8r2i">
+        <di:waypoint x="2246" y="500" />
+        <di:waypoint x="2288" y="195" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_125pe27">
+    <bpmndi:BPMNPlane id="BPMNPlane_1s8i62y" bpmnElement="DataObject_wartungsprotokoll">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="172" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="158" y="165" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fv12br_di" bpmnElement="Activity_0vx4jx9">
+        <dc:Bounds x="260" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mu6h58_di" bpmnElement="Activity_1m85bbs">
+        <dc:Bounds x="420" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xa8mwd_di" bpmnElement="Activity_06osl4v">
+        <dc:Bounds x="580" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_031h6a5_di" bpmnElement="Gateway_031h6a5" isMarkerVisible="true">
+        <dc:Bounds x="745" y="115" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="738" y="70" width="63" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1x8z772_di" bpmnElement="Gateway_136ullb">
+        <dc:Bounds x="865" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0iavnge_di" bpmnElement="Gateway_0gtbrv6">
+        <dc:Bounds x="1105" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14wev8d_di" bpmnElement="Activity_0pi4s1d">
+        <dc:Bounds x="960" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iamywt_di" bpmnElement="Activity_0tt7gh5">
+        <dc:Bounds x="960" y="320" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1phtqdu_di" bpmnElement="Gateway_1phtqdu" isMarkerVisible="true">
+        <dc:Bounds x="1105" y="115" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xx8uap_di" bpmnElement="Activity_0bzdjd4">
+        <dc:Bounds x="1210" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ftb3e4_di" bpmnElement="Event_0ftb3e4">
+        <dc:Bounds x="1372" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1345" y="165" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_199ibph_di" bpmnElement="DataObjectReference_199ibph">
+        <dc:Bounds x="1302" y="225" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1276" y="282" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0jhijty_di" bpmnElement="DataStoreReference_0jhijty">
+        <dc:Bounds x="205" y="225" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="200" y="282" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_05f71iw_di" bpmnElement="DataStoreReference_05f71iw">
+        <dc:Bounds x="1115" y="385" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1110" y="442" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_00ijxa0_di" bpmnElement="DataInputAssociation_00ijxa0">
+        <di:waypoint x="246" y="225" />
+        <di:waypoint x="274" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0v7l5lz_di" bpmnElement="DataOutputAssociation_0v7l5lz">
+        <di:waypoint x="1060" y="378" />
+        <di:waypoint x="1115" y="398" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1hoj3e6_di" bpmnElement="DataOutputAssociation_1hoj3e6">
+        <di:waypoint x="1281" y="180" />
+        <di:waypoint x="1305" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mb8wsp_di" bpmnElement="Flow_0mb8wsp">
+        <di:waypoint x="208" y="140" />
+        <di:waypoint x="260" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o0i8yy_di" bpmnElement="Flow_0o0i8yy">
+        <di:waypoint x="360" y="140" />
+        <di:waypoint x="420" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kgnq8o_di" bpmnElement="Flow_0kgnq8o">
+        <di:waypoint x="520" y="140" />
+        <di:waypoint x="580" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_035heix_di" bpmnElement="Flow_035heix">
+        <di:waypoint x="680" y="140" />
+        <di:waypoint x="745" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19knaol_di" bpmnElement="Flow_19knaol">
+        <di:waypoint x="770" y="165" />
+        <di:waypoint x="770" y="250" />
+        <di:waypoint x="865" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="775" y="205" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wp5awd_di" bpmnElement="Flow_0wp5awd">
+        <di:waypoint x="795" y="140" />
+        <di:waypoint x="1105" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="949" y="122" width="9" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tahef2_di" bpmnElement="Flow_0tahef2">
+        <di:waypoint x="915" y="250" />
+        <di:waypoint x="960" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10agqnj_di" bpmnElement="Flow_10agqnj">
+        <di:waypoint x="890" y="275" />
+        <di:waypoint x="890" y="360" />
+        <di:waypoint x="960" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p0v04p_di" bpmnElement="Flow_1p0v04p">
+        <di:waypoint x="1060" y="360" />
+        <di:waypoint x="1130" y="360" />
+        <di:waypoint x="1130" y="275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jgzazj_di" bpmnElement="Flow_0jgzazj">
+        <di:waypoint x="1060" y="250" />
+        <di:waypoint x="1105" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dzpj0m_di" bpmnElement="Flow_1dzpj0m">
+        <di:waypoint x="1130" y="225" />
+        <di:waypoint x="1130" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03o8f1j_di" bpmnElement="Flow_03o8f1j">
+        <di:waypoint x="1155" y="140" />
+        <di:waypoint x="1210" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07jitvt_di" bpmnElement="Flow_07jitvt">
+        <di:waypoint x="1310" y="140" />
+        <di:waypoint x="1372" y="140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_17qeynt">
+    <bpmndi:BPMNPlane id="BPMNPlane_0sy0h8a" bpmnElement="Activity_0yz5fwb">
+      <bpmndi:BPMNShape id="BPMNShape_0gsmcn0" bpmnElement="Activity_0qifl6l">
+        <dc:Bounds x="860" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0610dr8" bpmnElement="Event_0v8k0xo">
+        <dc:Bounds x="1162" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1143" y="225" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1mr37xk" bpmnElement="DataStoreReference_0utcq19">
+        <dc:Bounds x="225" y="75" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="160" y="93" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0xpk2zj" bpmnElement="Event_0smq8qi">
+        <dc:Bounds x="162" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="155" y="225" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1hc9rkt" bpmnElement="Activity_0004wou">
+        <dc:Bounds x="1020" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0dbd66v" bpmnElement="Activity_17cr1dc">
+        <dc:Bounds x="700" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1dlnydd" bpmnElement="Activity_1ppt1v1">
+        <dc:Bounds x="550" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0j6ebf7" bpmnElement="Activity_11pyd42">
+        <dc:Bounds x="250" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01n1nqe_di" bpmnElement="Activity_0tuogdh">
+        <dc:Bounds x="400" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_14xvc76" bpmnElement="DataInputAssociation_0lsxk6g">
+        <di:waypoint x="268" y="125" />
+        <di:waypoint x="293" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1eew7lh" bpmnElement="Flow_0er2nvc">
+        <di:waypoint x="800" y="200" />
+        <di:waypoint x="860" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_08bx5zz" bpmnElement="Flow_1pcjo2e">
+        <di:waypoint x="960" y="200" />
+        <di:waypoint x="1020" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0jeu9hv" bpmnElement="Flow_06kam8g">
+        <di:waypoint x="1120" y="200" />
+        <di:waypoint x="1162" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0e4l6m4" bpmnElement="Flow_1u8hzks">
+        <di:waypoint x="198" y="200" />
+        <di:waypoint x="250" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1dklfv4" bpmnElement="Flow_0l69c68">
+        <di:waypoint x="350" y="200" />
+        <di:waypoint x="400" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t4o8j2_di" bpmnElement="Flow_0t4o8j2">
+        <di:waypoint x="500" y="200" />
+        <di:waypoint x="550" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w9i4pg_di" bpmnElement="Flow_0w9i4pg">
+        <di:waypoint x="650" y="200" />
+        <di:waypoint x="700" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
